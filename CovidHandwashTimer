@@ -1,0 +1,54 @@
+const int ledPin1 = PB0;
+const int ledPin2 = PB1;
+const int ledPin3 = PB2;
+const int trigPin = PB3;
+const int echoPin = PB4;
+
+void setup() {
+pinMode(ledPin1, OUTPUT);
+pinMode(ledPin2, OUTPUT);
+pinMode(ledPin3, OUTPUT);
+}
+
+void loop(){
+long duration, inches, cm;
+pinMode(trigPin, OUTPUT);
+digitalWrite(trigPin, LOW);
+delayMicroseconds(2);
+digitalWrite(trigPin, HIGH);
+delayMicroseconds(10);
+digitalWrite(trigPin, LOW);
+pinMode(echoPin, INPUT);
+duration = pulseIn(echoPin, HIGH);
+inches = microsecondsToInches(duration);
+cm = microsecondsToCentimeters(duration);
+if(cm < 10 && cm < 100 && cm < 1000){
+digitalWrite(ledPin1, LOW);
+digitalWrite(ledPin2, LOW);
+digitalWrite(ledPin3, LOW);
+delay(5000);
+digitalWrite(ledPin1, HIGH);
+digitalWrite(ledPin2, LOW);
+digitalWrite(ledPin3, LOW);
+delay(5000);
+digitalWrite(ledPin1, HIGH);
+digitalWrite(ledPin2, HIGH);
+digitalWrite(ledPin3, LOW);
+delay(5000);
+digitalWrite(ledPin1, HIGH);
+digitalWrite(ledPin2, HIGH);
+digitalWrite(ledPin3, HIGH);
+delay(5000);
+digitalWrite(ledPin1, LOW);
+digitalWrite(ledPin2, LOW);
+digitalWrite(ledPin3, LOW);
+delay(20000);
+}
+delay(100);
+}
+long microsecondsToInches(long microseconds){
+return microseconds / 74 / 2;
+}
+long microsecondsToCentimeters(long microseconds){
+return microseconds / 29 / 2;
+}
